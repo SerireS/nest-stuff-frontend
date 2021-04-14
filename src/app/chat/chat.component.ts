@@ -5,6 +5,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {debounceTime, take, takeUntil} from 'rxjs/operators';
 import {ChatClient} from './shared/chat-client.model';
 import {ChatMessage} from './shared/chat-message.model';
+import {SendMessageDto} from '../stock/shared/send-message.dto';
 
 
 @Component({
@@ -85,7 +86,14 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   sendMessage(): void {
     console.log(this.messageFc.value);
-    this.chatService.sendMessage(this.messageFc.value);
+    if (this.chatClient !== undefined) {
+    const sendMsgDto: SendMessageDto = {
+      chatClientId: this.chatClient.id,
+      message: this.messageFc.value
+    };
+    this.chatService.sendMessage(sendMsgDto);
+    this.messageFc.patchValue('');
+  }
   }
 
   sendNickName(): void {
