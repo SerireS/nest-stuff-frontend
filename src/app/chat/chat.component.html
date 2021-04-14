@@ -1,0 +1,81 @@
+<div *ngIf="error$ | async as error">
+  {{error$}}
+</div>
+
+<div class="image" fxLayout="row" fxFlex *ngIf="chatClient">
+
+<div *ngIf="!socketId">
+  You are not connected!
+</div>
+  <div fxLayout="column" fxFlex="20" style="padding: 20px" fxLayoutGap="10px">
+    <mat-card fxFlex class="example-card">
+      <mat-card-header>
+        <h5 class="black"> Clients</h5>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="clients$ | async as clients">
+          <ul>
+            <li class="black" *ngFor="let client of clients">
+              {{client.nickname}}
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxLayout="column" fxFlex="80">
+    <mat-card fxFlex fxLayout="column" class="example-card">
+      <mat-card-header>
+        <h1 class="black"> Welcome {{chatClient.nickname}}</h1>
+      </mat-card-header>
+      <mat-card-content fxFlex fxLayout="column">
+        <mat-list fxFlex class="scroll">
+          <mat-list-item *ngFor="let message of messages">
+            <mat-icon class="black" mat-list-icon>face</mat-icon>
+            <div style="color: midnightblue" mat-line>{{message.chatClient?.nickname}}</div>
+            <div style="color: black" mat-line>{{message.message}}</div>
+            <div style="color: black"> {{message.date | date: 'hh:mm'}} </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <mat-form-field fxFlex>
+          <mat-label class="black">Enter Message</mat-label>
+          <input matInput type="text" [formControl]="messageFc">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
+            <mat-icon class="black">send</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-actions>
+
+      <mat-card-footer fxFlex="30px">
+          <span *ngIf="clientsTyping.length > 0"
+                style="color: midnightblue; font-size: 18px;">
+            Clients Typing: <span *ngFor="let client of clientsTyping"> {{client.nickname}},  </span>
+          </span>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+
+<div class="image" fxLayout="row" fxFlex fxLayoutAlign="center center" *ngIf="!chatClient">
+  <mat-card class="example-card" fxFlex="30">
+    <mat-card-header fxFlexAlign="center top">
+      <mat-card-title class="black">Welcome To The Chat</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="example-form-field" fxFlex>
+        <mat-label class="black">Enter Nickname</mat-label>
+        <input matInput type="text" [formControl]="nickNameFc">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="sendNickName()">
+          <mat-icon class="icon-display">trending_flat</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</div>
+
