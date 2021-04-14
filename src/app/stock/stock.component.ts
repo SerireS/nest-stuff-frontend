@@ -18,12 +18,15 @@ export class StockComponent implements OnInit, OnDestroy {
     currentValue: [''],
     description: ['']
   });
+  stocks$: Observable<StockValue[]> | undefined;
   unsubscribe$ = new Subject();
   stockCreate: StockValue | undefined;
   error: string | undefined;
   constructor(private stockService: StockService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.stocks$ = this.stockService.listenForStocks();
+    this.stockService.welcomeStocks();
   }
 
   sendMessage(): void {
@@ -40,7 +43,7 @@ export class StockComponent implements OnInit, OnDestroy {
     if (this.stockFC.value)
     {
       this.stockService.sendStock(this.stockFC.value);
-      console.log(this.stockFC.value)
+      console.log(this.stockFC.value);
     }
   }
 }

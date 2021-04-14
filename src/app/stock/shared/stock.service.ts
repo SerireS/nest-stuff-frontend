@@ -21,6 +21,15 @@ export class StockService {
     return this.socket
       .fromEvent<StockDTO>('stockDTO');
   }
+
+  listenForStocks(): Observable<StockValue[]> {
+    return this.socket.fromEvent<StockValue[]> ('stocks');
+  }
+
+  welcomeStocks(): void {
+    this.socket.emit('welcomeStock');
+}
+
   /*
   // Frontend is listening for backend events
   listenForMessages(): Observable<ChatMessage> {

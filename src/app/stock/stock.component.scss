@@ -1,3 +1,26 @@
 .image {
   background-image: url('https://i.pinimg.com/originals/b5/fd/3f/b5fd3fbe984103e08b9482471484394b.gif');
 }
+
+.example-card {
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 10px;
+}
+
+.black {
+  color: black;
+}
+
+.icon-display {
+  transform: scale(2.5);
+  color: black;
+}
+
+.scroll {
+  overflow: auto;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: white !important;;
+}
+
