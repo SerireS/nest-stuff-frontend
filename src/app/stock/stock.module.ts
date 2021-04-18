@@ -10,21 +10,22 @@ import {FlexModule} from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {StockState} from '../chat/state/stock.state';
 
 
 @NgModule({
   declarations: [StockComponent],
-    imports: [
-        CommonModule,
-        StockRoutingModule,
-        ReactiveFormsModule,
-        NgxsModule.forRoot([], {
-            developmentMode: !environment.production
-        }),
-        FlexModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatCardModule
-    ]
+  imports: [
+    CommonModule,
+    StockRoutingModule,
+    ReactiveFormsModule,
+      NgxsModule.forFeature([StockState]),
+    FlexModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatListModule
+  ]
 })
 export class StockModule { }

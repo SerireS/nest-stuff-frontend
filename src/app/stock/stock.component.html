@@ -3,55 +3,88 @@
   <div fxLayout="column" fxFlex="20" style="padding: 20px" fxLayoutGap="10px">
     <mat-card fxFlex class="example-card">
       <mat-card-header>
-        <h5 class="black"> Stocks</h5>
+        <h1 class="black"> Stocks</h1>
       </mat-card-header>
       <mat-card-content>
-        <div *ngIf="stocks$ | async as stocks">
-          <ul>
-            <li class="black" *ngFor="let stock of stocks">
-              {{stock.stockName}}
-            </li>
-          </ul>
+
+        <div *ngIf="stocks$ | async as stocks" fxFlex fxLayout="row" >
+          <div >
+            <ul>
+              <h3  class="black btn" type="button" *ngFor="let stock of stocks"
+                      [class.selected]="stock === selectedStock"
+                      (click)="onSelect(stock)">
+                {{stock.stockName}}
+              </h3>
+            </ul>
+          </div>
+
+          <div fxFlex></div>
+
+          <div>
+            <ul>
+              <h3 class="black" *ngFor="let stock of stocks">
+                {{stock.currentValue}}
+              </h3>
+            </ul>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <div>
-  <h3 style="color: white">New Stock</h3>
+  <div fxLayout="column" fxFlex="80">
+    <mat-card fxFlex fxLayout="column" class="example-card">
+      <mat-card-header>
+        <h1> Stock Details </h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="selectedStock">
+          <label> Current value of {{selectedStock.stockName}}</label>
+          <input  value="{{selectedStock.currentValue}}">
+          <button> Update</button>
+          <Button> Delete</Button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+      <mat-card-footer fxFlex="30px">
+        <div>
+          <h3 style="color: white">New Stock</h3>
 
-  <label style="color: white">
-    Id:
-    <input type="text" formControlName="id">
-  </label>
+          <label style="color: white">
+            Id:
+            <input type="text" formControlName="id">
+          </label>
 
-  <label style="color: white">
-    Name:
-    <input type="text" formControlName="stockName" id="name">
-  </label>
+          <label style="color: white">
+            Name:
+            <input type="text" formControlName="stockName" id="name">
+          </label>
 
-  <label style="color: white">
-    Description:
-    <input type="text" formControlName="description">
-  </label>
+          <label style="color: white">
+            Description:
+            <input type="text" formControlName="description">
+          </label>
 
-  <label style="color: white">
-    Initial Value:
-    <input type="number" formControlName="initValue">
-  </label>
+          <label style="color: white">
+            Initial Value:
+            <input type="number" formControlName="initValue">
+          </label>
 
-  <label style="color: white">
-    Current Value:
-    <input type="number" formControlName="currentValue">
-  </label>
+          <label style="color: white">
+            Current Value:
+            <input type="number" formControlName="currentValue">
+          </label>
 
-  <button type="button" (click)="sendStock()" >Send</button>
+          <button type="button" (click)="sendStock()" >Create</button>
+          <h4 *ngIf="error" style="color: #8b0000">{{error}}</h4>
+          <div *ngIf="stockCreate">
+            {{stockCreate | json}}
+            <button (click)="stockCreate = undefined">Yeahhhhhhh!</button>
+          </div>
+        </div>
 
-</div>
-
-<h4 *ngIf="error" style="color: #8b0000">{{error}}</h4>
-<div *ngIf="stockCreate">
-  {{stockCreate | json}}
-  <button (click)="stockCreate = undefined">Yeahhhhhhh!</button>
-</div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
 </div>

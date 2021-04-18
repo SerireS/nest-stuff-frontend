@@ -3,6 +3,7 @@ import {StockValue} from './stock.model';
 import {SocketStock} from '../../app.module';
 import {Observable} from 'rxjs';
 import {StockDTO} from './stock.dto';
+import {JoinStockDto} from '../../chat/shared/join.stock.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class StockService {
   welcomeStocks(): void {
     this.socket.emit('welcomeStock');
 }
+
+  joinStock(dto: JoinStockDto): void {
+    this.socket.emit('joinStock', dto);
+  }
 
   /*
   // Frontend is listening for backend events

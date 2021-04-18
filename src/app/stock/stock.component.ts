@@ -4,6 +4,9 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {debounceTime, map, take, takeUntil} from 'rxjs/operators';
 import {StockService} from './shared/stock.service';
 import {StockValue} from './shared/stock.model';
+import {StockState} from '../chat/state/stock.state';
+import {Select, Store} from '@ngxs/store';
+import {ListenForStocks} from '../chat/state/stock.actions';
 
 @Component({
   selector: 'app-chat',
@@ -11,6 +14,8 @@ import {StockValue} from './shared/stock.model';
   styleUrls: ['./stock.component.scss']
 })
 export class StockComponent implements OnInit, OnDestroy {
+  @Select(StockState.stocks) stockClients$: Observable<StockValue[]> | undefined;
+
   stockFC = this.fb.group({
     id: [''],
     stockName: [''],
@@ -22,9 +27,11 @@ export class StockComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
   stockCreate: StockValue | undefined;
   error: string | undefined;
-  constructor(private stockService: StockService, private fb: FormBuilder) { }
+  selectedStock: StockValue | undefined;
+  constructor(private stockService: StockService, private fb: FormBuilder, private store: Store) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new ListenForStocks());
     this.stocks$ = this.stockService.listenForStocks();
     this.stockService.welcomeStocks();
   }
@@ -45,5 +52,9 @@ export class StockComponent implements OnInit, OnDestroy {
       this.stockService.sendStock(this.stockFC.value);
       console.log(this.stockFC.value);
     }
+  }
+
+  onSelect(stock: StockValue): void {
+    this.selectedStock = stock;
   }
 }
