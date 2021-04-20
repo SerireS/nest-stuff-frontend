@@ -35,7 +35,7 @@
   <div fxLayout="column" fxFlex="80">
     <mat-card fxFlex fxLayout="column" class="example-card">
       <mat-card-header>
-        <h1> Stock Details </h1>
+        <h1 *ngIf="selectedStock"> Stock Details Of {{selectedStock.stockName}} </h1>
       </mat-card-header>
       <mat-card-content>
         <div *ngIf="selectedStock" [formGroup]="valueFC">
@@ -50,11 +50,6 @@
       <mat-card-footer fxFlex="30px">
         <div [formGroup]="stockFC">
           <h3 style="color: white">New Stock</h3>
-
-          <label style="color: white">
-            Id:
-            <input type="text" formControlName="id">
-          </label>
 
           <label style="color: white">
             Name:
