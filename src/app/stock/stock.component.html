@@ -1,4 +1,4 @@
-<div class="image" fxFlex [formGroup]="stockFC" >
+<div class="image" fxFlex >
 
   <div fxLayout="column" fxFlex="20" style="padding: 20px" fxLayoutGap="10px">
     <mat-card fxFlex class="example-card">
@@ -38,17 +38,17 @@
         <h1> Stock Details </h1>
       </mat-card-header>
       <mat-card-content>
-        <div *ngIf="selectedStock">
+        <div *ngIf="selectedStock" [formGroup]="valueFC">
           <label> Current value of {{selectedStock.stockName}}</label>
-          <input  value="{{selectedStock.currentValue}}">
-          <button> Update</button>
+          <input formControlName="newValue" value="{{selectedStock.currentValue}}">
+          <button (click)="updateStock()"> Update</button>
           <Button> Delete</Button>
         </div>
       </mat-card-content>
       <mat-card-actions>
       </mat-card-actions>
       <mat-card-footer fxFlex="30px">
-        <div>
+        <div [formGroup]="stockFC">
           <h3 style="color: white">New Stock</h3>
 
           <label style="color: white">
@@ -80,7 +80,7 @@
           <h4 *ngIf="error" style="color: #8b0000">{{error}}</h4>
           <div *ngIf="stockCreate">
             {{stockCreate | json}}
-            <button (click)="stockCreate = undefined">Yeahhhhhhh!</button>
+            <button (click)="stockCreate = undefined">nop</button>
           </div>
         </div>
 

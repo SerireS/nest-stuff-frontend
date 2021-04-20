@@ -23,6 +23,10 @@ export class StockComponent implements OnInit, OnDestroy {
     currentValue: [''],
     description: ['']
   });
+
+  valueFC = this.fb.group({
+    newValue: [''],
+  });
   stocks$: Observable<StockValue[]> | undefined;
   unsubscribe$ = new Subject();
   stockCreate: StockValue | undefined;
@@ -56,5 +60,18 @@ export class StockComponent implements OnInit, OnDestroy {
 
   onSelect(stock: StockValue): void {
     this.selectedStock = stock;
+  }
+
+  updateStock(): void {
+    if (this.selectedStock)
+    {
+      this.stockService.updateStock(this.selectedStock.id, {
+        id: this.selectedStock.id,
+        currentValue: this.valueFC.value.newValue,
+        description: this.selectedStock.description,
+        initValue: this.selectedStock.initValue,
+        stockName: this.selectedStock.stockName
+      });
+    }
   }
 }
